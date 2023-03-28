@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using EaFramework.Config;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System;
@@ -11,17 +12,21 @@ namespace EaFramework.Driver
 {
     public class DriverFIxture
     {
+        private readonly TestSettings testSettings;
+
         public IWebDriver Driver { get; }
         
-        public DriverFIxture(BrowserType browserType)
+        public DriverFIxture(TestSettings testSettings)
         {
-            Driver = GetWebDriver(browserType);
-            Driver.Navigate().GoToUrl("http://localhost:8000");
+            
+            Driver = GetWebDriver();
+            Driver.Navigate().GoToUrl(testSettings.AplicationUrl);
+            this.testSettings = testSettings;
         }
 
-        private IWebDriver GetWebDriver(BrowserType browserType)
+        private IWebDriver GetWebDriver()
         {
-            return BrowserType switch
+            return testSettings.BrowserType switch
             {
                 BrowserType.Chrome => new ChromeDriver(),
               //  BrowserType.FireFox => new FirefoxDriver(),

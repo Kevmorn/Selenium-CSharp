@@ -1,6 +1,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using EaFramework.Driver;
+using EaFramework.Config;
 
 namespace EaApplicationTest
 {
@@ -8,8 +9,17 @@ namespace EaApplicationTest
     {
         [Fact]
         public void Test1()
+
         {
-                var driver = new DriverFIxture(BrowserType.Chrome);
+            var testSettings = new TestSettings()
+            {
+                BrowserType = BrowserType.Chrome,
+                AplicationUrl = new Uri("http://www.localhost:8000"),
+                TimeoutInterval = 30
+
+            };    
+
+                var driver = new DriverFIxture(testSettings);
 
             driver.Driver.FindElement(By.LinkText("Product")).Click();
 
