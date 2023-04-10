@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace EaFramework.Driver
 {
-    public class DriverFIxture
+    public class DriverFIxture : IDriverFIxture, IDisposable
     {
         private readonly TestSettings testSettings;
 
         public IWebDriver Driver { get; }
-        
+
         public DriverFIxture(TestSettings testSettings)
         {
-            
+
             Driver = GetWebDriver();
             Driver.Navigate().GoToUrl(testSettings.AplicationUrl);
             this.testSettings = testSettings;
@@ -29,16 +29,21 @@ namespace EaFramework.Driver
             return testSettings.BrowserType switch
             {
                 BrowserType.Chrome => new ChromeDriver(),
-              //  BrowserType.FireFox => new FirefoxDriver(),
-               // BrowserType.FireFox => new SafariDriver(),
+                //  BrowserType.FireFox => new FirefoxDriver(),
+                // BrowserType.FireFox => new SafariDriver(),
                 _ => new ChromeDriver(),
             };
 
 
         }
+
+        public void Dispose()
+        {
+            Driver.Quit();
+        }
     }
 
-   public enum BrowserType
+    public enum BrowserType
     {
         Chrome,
         Firefox,

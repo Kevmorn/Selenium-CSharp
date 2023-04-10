@@ -5,7 +5,7 @@ using EaFramework.Config;
 
 namespace EaApplicationTest
 {
-    public class UnitTest1 : IDisposable
+    public class UnitTest1 : IClassFixture
     {
 
         private IDriverFIxture _driverFIxture;
